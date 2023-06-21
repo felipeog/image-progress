@@ -1,0 +1,1 @@
+WebP placeholders result.
