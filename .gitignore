@@ -1,1 +1,10 @@
 node_modules
+.DS_Store
+.env
+
+scripts/buildContent/**/*.gif
+scripts/buildContent/**/*.jpeg
+scripts/buildContent/**/*.jpg
+scripts/buildContent/**/*.png
+scripts/buildContent/**/*.svg
+scripts/buildContent/**/*.webp
