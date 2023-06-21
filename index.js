@@ -1,8 +1,8 @@
 const imageUrl = "https://i.postimg.cc/wxP1WpL6/felipe.png";
 const placeholderUrl = "https://i.postimg.cc/8Cj5dXcF/felipe-placeholder.webp";
 const dimensions = {
-  width: 300,
-  height: 300,
+  width: "400px",
+  height: "300px",
 };
 
 window.addEventListener("load", () => {
@@ -12,9 +12,10 @@ window.addEventListener("load", () => {
   const imageProgress = document.querySelector(".image-progress");
   const request = new XMLHttpRequest();
 
-  // imageContainer.style.width = `${dimensions.width}px`;
-  // imageContainer.style.height = `${dimensions.height}px`;
-  imagePlaceholder.src = placeholderUrl;
+  imageContainer.style.width = dimensions.width;
+  imageContainer.style.height = dimensions.height;
+  imagePlaceholder.setAttribute("src", placeholderUrl);
+  imagePlaceholder.setAttribute("loading", "lazy");
 
   request.addEventListener("abort", (event) => {
     console.log("abort");
@@ -51,7 +52,7 @@ window.addEventListener("load", () => {
     if (event.lengthComputable) {
       const percentage = event.loaded / event.total;
 
-      imageProgress.style.right = `${100 - percentage * 100}%`;
+      imageProgress.style.left = `${percentage * 100}%`;
     }
   });
   request.addEventListener("readystatechange", (event) => {
