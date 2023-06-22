@@ -1,3 +1,52 @@
+const baseUrl =
+  "https://res.cloudinary.com/felipeog/image/upload/image-progress";
+
+function getImageUrl(imageName) {
+  const imageBaseUrl = `${baseUrl}/${imageName}`;
+  const windowWidth = window.innerWidth;
+  const pixelRatio = window.devicePixelRatio;
+
+  // higher pixel ratio
+  if (pixelRatio > 1) {
+    if (windowWidth <= 320) {
+      return `${imageBaseUrl}_640w.jpg`;
+    }
+
+    if (windowWidth <= 640) {
+      return `${imageBaseUrl}_1280w.jpg`;
+    }
+
+    if (windowWidth <= 960) {
+      return `${imageBaseUrl}_1920w.jpg`;
+    }
+
+    if (windowWidth <= 1280) {
+      return `${imageBaseUrl}_2560w.jpg`;
+    }
+
+    return `${imageBaseUrl}_3840w.jpg`;
+  }
+
+  // lower pixel ratio
+  if (windowWidth <= 640) {
+    return `${imageBaseUrl}_640w.jpg`;
+  }
+
+  if (windowWidth <= 1280) {
+    return `${imageBaseUrl}_1280w.jpg`;
+  }
+
+  if (windowWidth <= 1920) {
+    return `${imageBaseUrl}_1920w.jpg`;
+  }
+
+  if (windowWidth <= 2560) {
+    return `${imageBaseUrl}_2560w.jpg`;
+  }
+
+  return `${imageBaseUrl}_3840w.jpg`;
+}
+
 function loadImage(image) {
   const imageContent = document.createElement("img");
   const imageProgress = document.createElement("div");
@@ -23,7 +72,7 @@ function loadImage(image) {
       image.classList.add("image--error");
       imageContent.setAttribute(
         "title",
-        `Error loading image: ${image.dataset.imageUrl}`
+        `Error loading image: ${image.dataset.imageName}`
       );
     }
   });
@@ -36,7 +85,7 @@ function loadImage(image) {
     }
   });
 
-  request.open("GET", image.dataset.imageUrl);
+  request.open("GET", getImageUrl(image.dataset.imageName));
   request.responseType = "arraybuffer";
   request.send();
 }
@@ -66,7 +115,10 @@ function setPlaceholders(images) {
     const imagePlaceholder = document.createElement("img");
 
     imagePlaceholder.classList.add("image__placeholder");
-    imagePlaceholder.setAttribute("src", image.dataset.placeholderUrl);
+    imagePlaceholder.setAttribute(
+      "src",
+      `${baseUrl}/${image.dataset.imageName}_30w.webp`
+    );
 
     image.append(imagePlaceholder);
   });
